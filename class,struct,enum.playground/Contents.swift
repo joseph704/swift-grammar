@@ -1,13 +1,20 @@
 /*
  CLASS
  - 단일 상속 가능
- - 참조타입(call by reference)
+ - 참조타입(call by reference) (인스턴스 생성시 let 사용)
  - ios 프레임워크의 대부분이 클래스로 구성되어있다
  
  STRUCT
  - 상속이 불가능
- - 값타입
+ - 값타입 (인스턴스 생성시 let,var 차이점 존재)
  - swift의 대부분은 모두 struct
+ 
+ CLASS 와 STRUCT의 공통점
+ 1 . 서로 다른 타입(자료형)들을 하나로 묶을 수 있다.
+ 2. 이러한 묶은 자료형들을 새로운 타입처럼 사용 가능.
+ 3. 클래스/구조체 안에서 메소드/프로퍼티 정의 가능
+ 4. extension이 가능.
+ 
  */
 class Circle {
     public var radius: Double         // property
@@ -75,7 +82,7 @@ class MacBook1:NoteBook1 {
     }
 }
 
-let macBook1 = MacBook1()
+let macBook1:MacBook1 = MacBook1()
 macBook1.name = "MacBook Pro1"
 macBook1.turnOn()
 
@@ -102,7 +109,7 @@ struct Cir {    // struct 를 class로 바꿔보시오
     var radius = 0
 }
 
-var cir1 = Cir()
+var cir1:Cir = Cir()
 
 var cir2 = cir1
 cir2.radius=10
@@ -135,11 +142,19 @@ func printAppleDevice(osType1: AppleOs) {
 
 printAppleDevice(osType1: AppleOs.watchOS)
 
+
+//--------------------------------------->
+
+
 enum AppleOs1: String{
     case iOS = "iPad"
     case macOS
     case tvOS
     case watchOS = "Apple watch"
 }
-var osType2: AppleOs1 = .iOS
-print(osType2.rawValue)
+var osType2: AppleOs1 = AppleOs1.iOS
+print(osType2.rawValue) // 원시값 출력
+
+let macOs2: AppleOs1 = AppleOs1.macOS
+print(macOs2) // 이것도 원시값 출력
+
