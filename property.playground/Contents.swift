@@ -119,3 +119,46 @@ print("square.origin is now at (\(square.origin.x), \(square.origin.y))")
 
 // Prints "square.origin is now at (10.0, 10.0)"
 
+class StepCounter {                         // totalSteps을 위한 willSet과 didSet 감시자는 새로운 값이 할당될 때 마다 호출 되며, 새로운 값이 현재 값과 같다고 하더라도 호출이 됨.
+    var totalSteps: Int = 0 {
+        willSet(newTotalSteps) {            // StepCounter 클래스는 Int 타입의 totalSteps 속성으로 선언되며 willSet과 didSet 감시자를 가지는 저장 속성임.
+            print("About to set totalSteps to \(newTotalSteps)") // willSet 감시자 예제는 newTotalSteps 이름인 사용자 인자를 가짐. 이 예제는 값이 설정되면 단순히 그 값을 출력함.
+        }
+                                                                 // didSet 감시자는 totalSteps 값이 갱신된 후에 호출되며, totalSteps의 새로운 값을 이전 값과 비교함. 만약 총 발걸음 수가 증가하면 얼마나 많이 걸었는지 출력함. didSet 감시자는 이전값에 사용자 인자 이름을 지원하지 않고, 대신 oldValue 기본 이름으로 사용함.
+        didSet {
+            if totalSteps > oldValue  {
+                print("Added \(totalSteps - oldValue) steps")
+            }
+        }
+    }
+}
+let stepCounter = StepCounter()
+stepCounter.totalSteps = 200
+// About to set totalSteps to 200
+// Added 200 steps
+stepCounter.totalSteps = 360
+// About to set totalSteps to 360
+// Added 160 steps
+stepCounter.totalSteps = 896
+// About to set totalSteps to 896
+// Added 536 steps
+
+
+
+// 타입 프로퍼티
+struct AudioChannel {
+    static let thresholdLevel = 10
+    static var maxInputLevelForAllChannels = 0
+    var currentLevel: Int = 0 {
+        didSet {
+            if currentLevel > AudioChannel.thresholdLevel {
+                // cap the new audio level to the threshold level
+                currentLevel = AudioChannel.thresholdLevel
+            }
+            if currentLevel > AudioChannel.maxInputLevelForAllChannels {
+                // store this as the new overall maximum input level
+                AudioChannel.maxInputLevelForAllChannels = currentLevel
+            }
+        }
+    }
+}

@@ -94,3 +94,5 @@ var test2=2
 addTwoNumber(num1: test1, num2: &test2)
 print(test2)
 
+var aa = 1
+var bb = 2
